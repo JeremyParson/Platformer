@@ -1,0 +1,104 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://player/state machine/state machine player.gd" type="Script" id=1]
+[ext_resource path="res://player/state machine/states/motion/on ground/idle.gd" type="Script" id=2]
+[ext_resource path="res://player/state machine/states/motion/on ground/move.gd" type="Script" id=3]
+[ext_resource path="res://assets/images/p1_character.png" type="Texture" id=4]
+[ext_resource path="res://player/script.gd" type="Script" id=5]
+[ext_resource path="res://player/outline.shader" type="Shader" id=6]
+[ext_resource path="res://player/circleshape2d.tres" type="Shape2D" id=7]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/outline_width = 2.0
+shader_param/outline_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/outline_width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "highlight"
+length = 2.75
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/outline_width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 4.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 1, 1.5, 2, 2.5, 2.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 0.537255, 0, 1 ), Color( 1, 0.937255, 0, 1 ), Color( 0.0784314, 1, 0, 1 ), Color( 0, 0.0392157, 1, 1 ), Color( 0.45098, 0, 0.996078, 1 ), Color( 1, 0, 0.937255, 1 ), Color( 0.972549, 0, 0, 1 ) ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+material = SubResource( 1 )
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="."]
+use_parent_material = true
+texture = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = ExtResource( 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 2 )
+anims/highlight = SubResource( 3 )
+
+[node name="SafeTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="States" type="Node" parent="."]
+script = ExtResource( 1 )
+START_STATE = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="States"]
+script = ExtResource( 2 )
+move_speed = 1500.0
+max_speed = 450.0
+
+[node name="Move" type="Node" parent="States"]
+script = ExtResource( 3 )
+move_speed = 1500.0
+max_speed = 450.0
