@@ -15,8 +15,7 @@ func initialize (args):
 #
 func update (delta):
 	set_facing(clamp(velocity.x, -1, 1))
-	velocity = velocity.clamped(max_speed)
-	
+	velocity = velocity.clamped(max_speed + 100 if owner.has_potato else max_speed)
 	velocity = owner.move_and_slide(velocity)
 	
 

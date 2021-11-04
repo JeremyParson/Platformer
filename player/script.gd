@@ -5,11 +5,12 @@ signal body_coliision (collider)
 export (int, 3) var controlling_player
 
 onready var states = $States
-onready var sprite = $Sprite
+onready var sprite = $Pivot/Sprite
 onready var animationPlayer = $AnimationPlayer
 onready var safeTimer = $SafeTimer
 
 var facing : int
+var has_potato = false
 
 func _ready():
 	states.initialize()

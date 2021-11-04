@@ -1,0 +1,31 @@
+[gd_resource type="Animation" format=2]
+
+[resource]
+resource_local_to_scene = true
+length = 2.75
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/outline_width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 4.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 1, 1.5, 2, 2.5, 2.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 0.537255, 0, 1 ), Color( 1, 0.937255, 0, 1 ), Color( 0.0784314, 1, 0, 1 ), Color( 0, 0.0392157, 1, 1 ), Color( 0.45098, 0, 0.996078, 1 ), Color( 1, 0, 0.937255, 1 ), Color( 0.972549, 0, 0, 1 ) ]
+}

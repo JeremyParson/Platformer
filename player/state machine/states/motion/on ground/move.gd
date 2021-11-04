@@ -6,7 +6,7 @@ func update (delta):
 	if input == Vector2.ZERO:
 		emit_signal("finished", "idle")
 	
-	velocity += input * move_speed * delta
+	velocity += input * (move_speed + 700 if owner.has_potato else move_speed) * delta
 	
 	if not input.x:
 		velocity.x = lerp(velocity.x , 0, FRICTION)

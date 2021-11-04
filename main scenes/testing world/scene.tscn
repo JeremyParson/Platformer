@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://main scenes/testing world/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://player/scene.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://main scenes/testing world/script.gd" type="Script" id=4]
 [ext_resource path="res://player/outline.shader" type="Shader" id=5]
 [ext_resource path="res://interfaces/HUD/scene.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/images/p3_character.png" type="Texture" id=7]
+[ext_resource path="res://assets/images/p4_character.png" type="Texture" id=8]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -13,11 +15,265 @@ shader = ExtResource( 5 )
 shader_param/outline_width = 2.0
 shader_param/outline_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="ShaderMaterial" id=11]
 resource_local_to_scene = true
 shader = ExtResource( 5 )
 shader_param/outline_width = 2.0
 shader_param/outline_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="GDScript" id=12]
+script/source = "extends KinematicBody2D
+
+signal body_coliision (collider)
+
+export (int, 3) var controlling_player
+
+onready var states = $States
+onready var sprite = $Pivot/Sprite
+onready var animationPlayer = $AnimationPlayer
+onready var safeTimer = $SafeTimer
+
+var facing : int
+var has_potato = false
+
+func _ready():
+	states.initialize()
+
+func _process(delta):
+	var count = get_slide_count()
+	if not count: return
+	
+	for i in count:
+		var collision_info = get_slide_collision(i)
+		if collision_info.collider is KinematicBody2D:
+			emit_signal(\"body_coliision\", collision_info.collider)
+"
+
+[sub_resource type="Animation" id=10]
+resource_local_to_scene = true
+length = 2.75
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/outline_width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 4.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 1, 1.5, 2, 2.5, 2.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 0.537255, 0, 1 ), Color( 1, 0.937255, 0, 1 ), Color( 0.0784314, 1, 0, 1 ), Color( 0, 0.0392157, 1, 1 ), Color( 0.45098, 0, 0.996078, 1 ), Color( 1, 0, 0.937255, 1 ), Color( 0.972549, 0, 0, 1 ) ]
+}
+
+[sub_resource type="ShaderMaterial" id=13]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/outline_width = 2.0
+shader_param/outline_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="GDScript" id=14]
+script/source = "extends KinematicBody2D
+
+signal body_coliision (collider)
+
+export (int, 3) var controlling_player
+
+onready var states = $States
+onready var sprite = $Pivot/Sprite
+onready var animationPlayer = $AnimationPlayer
+onready var safeTimer = $SafeTimer
+
+var facing : int
+var has_potato = false
+
+func _ready():
+	states.initialize()
+
+func _process(delta):
+	var count = get_slide_count()
+	if not count: return
+	
+	for i in count:
+		var collision_info = get_slide_collision(i)
+		if collision_info.collider is KinematicBody2D:
+			emit_signal(\"body_coliision\", collision_info.collider)
+"
+
+[sub_resource type="Animation" id=6]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/outline_width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 2.75
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/outline_width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 4.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 1, 1.5, 2, 2.5, 2.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 0.537255, 0, 1 ), Color( 1, 0.937255, 0, 1 ), Color( 0.0784314, 1, 0, 1 ), Color( 0, 0.0392157, 1, 1 ), Color( 0.45098, 0, 0.996078, 1 ), Color( 1, 0, 0.937255, 1 ), Color( 0.972549, 0, 0, 1 ) ]
+}
+
+[sub_resource type="ShaderMaterial" id=15]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/outline_width = 2.0
+shader_param/outline_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="GDScript" id=16]
+script/source = "extends KinematicBody2D
+
+signal body_coliision (collider)
+
+export (int, 3) var controlling_player
+
+onready var states = $States
+onready var sprite = $Pivot/Sprite
+onready var animationPlayer = $AnimationPlayer
+onready var safeTimer = $SafeTimer
+
+var facing : int
+var has_potato = false
+
+func _ready():
+	states.initialize()
+
+func _process(delta):
+	var count = get_slide_count()
+	if not count: return
+	
+	for i in count:
+		var collision_info = get_slide_collision(i)
+		if collision_info.collider is KinematicBody2D:
+			emit_signal(\"body_coliision\", collision_info.collider)
+"
+
+[sub_resource type="Animation" id=8]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/outline_width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 2.75
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/outline_width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 4.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 1, 1.5, 2, 2.5, 2.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 0.537255, 0, 1 ), Color( 1, 0.937255, 0, 1 ), Color( 0.0784314, 1, 0, 1 ), Color( 0, 0.0392157, 1, 1 ), Color( 0.45098, 0, 0.996078, 1 ), Color( 1, 0, 0.937255, 1 ), Color( 0.972549, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.718954, 1 )
+colors = PoolColorArray( 0.756836, 0.110865, 0, 1, 0.960784, 0.521569, 0, 1, 1, 0.796875, 0, 0 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 125.0
+initial_velocity_random = 0.75
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 5.0
+color_ramp = SubResource( 4 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 4 )
@@ -33,17 +289,59 @@ tile_set = ExtResource( 1 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 65536, 0, 0, 65551, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131083, 0, 0, 131085, 0, 0, 131087, 0, 0, 196608, 0, 0, 196610, 0, 0, 196612, 0, 0, 196619, 0, 0, 196621, 0, 0, 196623, 0, 0, 262144, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262153, 0, 0, 262154, 0, 0, 262155, 0, 0, 262159, 0, 0, 327680, 0, 0, 327682, 0, 0, 327693, 0, 0, 327695, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 0, 393229, 0, 0, 393231, 0, 0, 458752, 0, 0, 458754, 0, 0, 458756, 0, 0, 458763, 0, 0, 458765, 0, 0, 458767, 0, 0, 524288, 0, 0, 524295, 0, 0, 524296, 0, 0, 524303, 0, 0, 589824, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0, 589829, 0, 0, 589830, 0, 0, 589831, 0, 0, 589832, 0, 0, 589833, 0, 0, 589834, 0, 0, 589835, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589839, 0, 0 )
 
-[node name="Player1" parent="." instance=ExtResource( 2 )]
-material = SubResource( 1 )
-position = Vector2( 96.5436, 96.4026 )
+[node name="Players" type="Node2D" parent="."]
 
-[node name="Player2" parent="." instance=ExtResource( 2 )]
-material = SubResource( 2 )
-position = Vector2( 927.992, 543.483 )
+[node name="Player1" parent="Players" instance=ExtResource( 2 )]
+material = SubResource( 1 )
+position = Vector2( 96.1053, 91.705 )
+
+[node name="Player2" parent="Players" instance=ExtResource( 2 )]
+material = SubResource( 11 )
+position = Vector2( 91.9796, 539.915 )
+script = SubResource( 12 )
 controlling_player = 1
 
-[node name="Sprite" parent="Player2" index="0"]
+[node name="Sprite" parent="Players/Player2/Pivot" index="0"]
 texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" parent="Players/Player2" index="4"]
+anims/highlight = SubResource( 10 )
+
+[node name="Player3" parent="Players" instance=ExtResource( 2 )]
+material = SubResource( 13 )
+position = Vector2( 926.803, 543.483 )
+script = SubResource( 14 )
+controlling_player = 2
+
+[node name="Sprite" parent="Players/Player3/Pivot" index="0"]
+texture = ExtResource( 7 )
+
+[node name="AnimationPlayer" parent="Players/Player3" index="4"]
+anims/RESET = SubResource( 6 )
+anims/highlight = SubResource( 7 )
+
+[node name="Player4" parent="Players" instance=ExtResource( 2 )]
+material = SubResource( 15 )
+position = Vector2( 927.602, 88.5821 )
+script = SubResource( 16 )
+controlling_player = 3
+
+[node name="Sprite" parent="Players/Player4/Pivot" index="0"]
+texture = ExtResource( 8 )
+
+[node name="AnimationPlayer" parent="Players/Player4" index="4"]
+anims/RESET = SubResource( 8 )
+anims/highlight = SubResource( 9 )
+
+[node name="EffectLayer" type="Node2D" parent="."]
+
+[node name="ExplosionParticle" type="Particles2D" parent="EffectLayer"]
+emitting = false
+amount = 100
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 5 )
 
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -53,4 +351,8 @@ autostart = true
 [node name="PotatoTimer" type="Timer" parent="."]
 wait_time = 30.0
 
-[editable path="Player2"]
+[connection signal="timeout" from="PotatoTimer" to="." method="_on_PotatoTimer_timeout"]
+
+[editable path="Players/Player2"]
+[editable path="Players/Player3"]
+[editable path="Players/Player4"]
