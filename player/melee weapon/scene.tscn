@@ -1,8 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://player/melee weapon/script.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/baseball bat.png" type="Texture" id=2]
 [ext_resource path="res://power ups/weapon/bat.tres" type="Resource" id=3]
+
+[sub_resource type="ParticlesMaterial" id=2]
+emission_shape = 2
+emission_box_extents = Vector3( 1, 15, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 10 )
@@ -12,12 +21,28 @@ script = ExtResource( 1 )
 _weapon_data = ExtResource( 3 )
 debug_swing = true
 debug_swing_direction = 1
+swing_duration = 0.25
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 0, -48 )
+amount = 250
+lifetime = 0.2
+local_coords = false
+process_material = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -10 )
+position = Vector2( 0, -40 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="HitBox" type="Area2D" parent="."]
-position = Vector2( 0, -10 )
+position = Vector2( 0, -40 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource( 1 )

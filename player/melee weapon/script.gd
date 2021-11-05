@@ -25,7 +25,7 @@ onready var debug_direction_map = {
 
 #
 export (int) var swing_offset = 45
-export (int) var swing_duration = 3
+export (float) var swing_duration = 3
 
 #
 onready var sprite = $Sprite
@@ -33,6 +33,7 @@ onready var hitBox = $HitBox
 onready var collisionShape2D = $HitBox/CollisionShape2D
 onready var cooldownTimer = $CooldownTimer
 onready var tween = $Tween
+onready var particles2D = $Particles2D
 
 #
 var durability : int = 0
@@ -66,6 +67,7 @@ func swing (direction : Vector2):
 	rotation_degrees = attack_angle - swing_offset
 	visible = true
 	tween.interpolate_property(self, "rotation_degrees", rotation_degrees, rotation_degrees + (swing_offset * 2), swing_duration)
+	tween.interpolate_property(particles2D.process_material, "angle", -rotation_degrees, -(rotation_degrees + (swing_offset * 2)), swing_duration)
 	tween.start()
 
 #
