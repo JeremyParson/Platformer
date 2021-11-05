@@ -24,6 +24,10 @@ onready var debug_direction_map = {
 }
 
 #
+export (int) var swing_offset = 45
+export (int) var swing_duration = 3
+
+#
 onready var sprite = $Sprite
 onready var hitBox = $HitBox
 onready var collisionShape2D = $HitBox/CollisionShape2D
@@ -45,6 +49,7 @@ func _ready():
 #
 func _process(delta):
 	if debug_swing:
+		debug_swing = false
 		swing(debug_direction_map[debug_swing_direction])
 
 #
@@ -56,9 +61,17 @@ func initialize (weapon_data : Weapon):
 	collisionShape2D.shape.extents = _weapon_data.image.get_size() / 2
 
 #
-func swing (direction):
+func swing (direction : Vector2):
+	var attack_angle = rad2deg(facing.angle_to(direction))
+	rotation_degrees = attack_angle - swing_offset
 	visible = true
+	tween.interpolate_property(self, "rotation_degrees", rotation_degrees, rotation_degrees + (swing_offset * 2), swing_duration)
+	tween.start()
 
 #
 func _on_HitBox_body_entered(body):
+	pass # Replace with function body.
+
+
+func _on_Tween_tween_all_completed():
 	pass # Replace with function body.
