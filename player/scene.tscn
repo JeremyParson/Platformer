@@ -45,7 +45,11 @@ tracks/1/keys = {
 
 [node name="Player" type="KinematicBody2D"]
 material = SubResource( 1 )
+position = Vector2( 523.878, 301.041 )
 script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="ShadowSprite" type="Sprite" parent="."]
 position = Vector2( 0, 19 )
