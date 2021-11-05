@@ -349,7 +349,7 @@ one_shot = true
 autostart = true
 
 [node name="PotatoTimer" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 3.0
 
 [connection signal="timeout" from="PotatoTimer" to="." method="_on_PotatoTimer_timeout"]
 

@@ -66,10 +66,10 @@ func _on_Body_collision (collider):
 #
 func _on_PotatoTimer_timeout():
 	explosionParticle.global_position = potato_carrier.global_position
-	potato_carrier.queue_free()
+	potato_carrier.free()
 	explosionParticle.restart()
 	
-	if players.get_child_count() - 1 > 1:
+	if players.get_child_count() > 1:
 		pass_potato()
 	else:
 		end_game()
